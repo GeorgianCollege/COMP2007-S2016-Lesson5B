@@ -6,8 +6,18 @@
             <div class="col-md-offset-2 col-md-8">
                 <h1>Student List</h1>
                 <a href="StudentDetails.aspx" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Add Student</a>
+
+                <label for="PageSizeDropDownList">Records per page: </label>
+                <asp:DropDownList ID="PageSizeDropDownList" runat="server" AutoPostBack="true" 
+                    CssClass="btn btn-default btn-sm dropdown-toggle" OnSelectedIndexChanged="PageSizeDropDownList_SelectedIndexChanged">
+                    <asp:ListItem Text="3" Value="3" />
+                    <asp:ListItem Text="5" Value="5" />
+                    <asp:ListItem Text="All" Value="10000" />
+                </asp:DropDownList>
+
                 <asp:GridView runat="server" CssClass="table table-bordered table-striped table-hover" 
-                    ID="StudentsGridView" AutoGenerateColumns="false" DataKeyNames="StudentID" OnRowDeleting="StudentsGridView_RowDeleting">
+                    ID="StudentsGridView" AutoGenerateColumns="false" DataKeyNames="StudentID" OnRowDeleting="StudentsGridView_RowDeleting"
+                    AllowPaging="true" PageSize="3" OnPageIndexChanging="StudentsGridView_PageIndexChanging">
                     <Columns>
                         <asp:BoundField DataField="StudentID" HeaderText="Student ID" Visible="true" />
                         <asp:BoundField DataField="LastName" HeaderText="Last Name" Visible="true" />

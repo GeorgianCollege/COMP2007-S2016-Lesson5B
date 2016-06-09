@@ -70,5 +70,23 @@ namespace COMP2007_S2016_Lesson5B
 
             }
         }
+
+        protected void StudentsGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            // Set the new page number
+            StudentsGridView.PageIndex = e.NewPageIndex;
+
+            // refresh the grid
+            this.GetStudents();
+        }
+
+        protected void PageSizeDropDownList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // set new page size
+            StudentsGridView.PageSize = Convert.ToInt32(PageSizeDropDownList.SelectedValue);
+
+            // refresh the grid
+            this.GetStudents();
+        }
     }
 }
