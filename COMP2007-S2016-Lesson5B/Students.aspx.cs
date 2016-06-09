@@ -45,5 +45,30 @@ namespace COMP2007_S2016_Lesson5B
                 StudentsGridView.DataBind();
             }
         }
+
+        protected void StudentsGridView_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            // store which row was clicked
+            int selectedRow = e.RowIndex;
+
+            // get the selected StudentID using the Grid's DataKey Collection
+            int StudentID = Convert.ToInt32(StudentsGridView.DataKeys[selectedRow].Values["StudentID"]);
+
+            // use EF to find the selected student from DB and remove it
+            using (DefaultConnection db = new DefaultConnection())
+            {
+                Student deletedStudent = (from studentRecords in db.Students
+                                          where studentRecords.StudentID == StudentID
+                                          select studentRecords).FirstOrDefault();
+
+                // perform the removal in the DB
+                db.Students.Remove(deletedStudent);
+                db.SaveChanges();
+
+                // refresh the grid
+                this.GetStudents();
+
+            }
+        }
     }
 }
